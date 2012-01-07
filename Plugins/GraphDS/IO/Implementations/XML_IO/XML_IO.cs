@@ -33,6 +33,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using VertexView = sones.GraphQL.Result.VertexView;
 using sones.Library.CollectionWrapper;
+using sones.Library.UserdefinedDataType;
 
 
 namespace sones.Plugins.GraphDS.IO.XML_IO
@@ -157,7 +158,16 @@ namespace sones.Plugins.GraphDS.IO.XML_IO
                         }
                         else
                         {
-                            property.Value = aProperty.Item2.ToString();
+
+                            if (aProperty.Item2.GetType().IsSubclassOf(typeof(AUserdefinedDataType)))
+                            {
+                                property.Value = ((AUserdefinedDataType)aProperty.Item2).Value;
+                            }
+                            else
+                            {
+                                property.Value = aProperty.Item2.ToString();                                
+                            }
+
                             property.Type = aProperty.Item2.GetType().Name;
                         }
                         
@@ -235,9 +245,17 @@ namespace sones.Plugins.GraphDS.IO.XML_IO
                             }
                             else
                             {
+                                if (edgeProperties[i].Item2.GetType().IsSubclassOf(typeof(AUserdefinedDataType)))
+                                {
+                                    hyperEdge.Properties[i].Value = ((AUserdefinedDataType)edgeProperties[i].Item2).Value;
+                                }
+                                else
+                                {
+                                    hyperEdge.Properties[i].Value = edgeProperties[i].Item2.ToString();
+                                }
+
                                 hyperEdge.Properties[i].Type = edgeProperties[i].Item2.GetType().Name;
-                                hyperEdge.Properties[i].Value = edgeProperties[i].Item2.ToString();
-                            }
+                            }                            
                         }
 
                         #endregion
@@ -264,8 +282,16 @@ namespace sones.Plugins.GraphDS.IO.XML_IO
                                 }
                                 else
                                 {
+                                    if (SingleEdgesProperties[j].Item2.GetType().IsSubclassOf(typeof(AUserdefinedDataType)))
+                                    {
+                                        hyperEdge.SingleEdge[i].Properties[j].Value = ((AUserdefinedDataType)SingleEdgesProperties[j].Item2).Value;
+                                    }
+                                    else
+                                    {
+                                        hyperEdge.SingleEdge[i].Properties[j].Value = SingleEdgesProperties[j].Item2.ToString();
+                                    }
+
                                     hyperEdge.SingleEdge[i].Properties[j].Type = SingleEdgesProperties[j].Item2.GetType().Name;
-                                    hyperEdge.SingleEdge[i].Properties[j].Value = SingleEdgesProperties[j].Item2.ToString();
                                 }
                             }
 
@@ -319,8 +345,16 @@ namespace sones.Plugins.GraphDS.IO.XML_IO
                             }
                             else
                             {
+                                if (edgeProperties[i].Item2.GetType().IsSubclassOf(typeof(AUserdefinedDataType)))
+                                {
+                                    SingleEdges.Properties[i].Value = ((AUserdefinedDataType)edgeProperties[i].Item2).Value;
+                                }
+                                else
+                                {
+                                    SingleEdges.Properties[i].Value = edgeProperties[i].Item2.ToString();
+                                }
+
                                 SingleEdges.Properties[i].Type = edgeProperties[i].Item2.GetType().Name;
-                                SingleEdges.Properties[i].Value = edgeProperties[i].Item2.ToString();
                             }
                         }
 

@@ -341,6 +341,10 @@
       <Project>{A233FDB4-70A9-4284-827A-1704950E0EF3}</Project>
       <Name>Settings</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Library\Internal\UserdefinedDataType\UserdefinedDataType.csproj">
+      <Project>{1A2B672E-DD8C-4948-8370-1483408E3B50}</Project>
+      <Name>UserdefinedDataType</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Library\Internal\VersionedPluginManager\PluginManager.csproj">
       <Project>{1F652BC0-ECEE-409B-8EFB-51276C41EAD1}</Project>
       <Name>PluginManager %28Dependencies\Library\Internal\PluginManager%29</Name>

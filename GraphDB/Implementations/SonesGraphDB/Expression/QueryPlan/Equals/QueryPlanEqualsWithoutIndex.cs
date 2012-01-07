@@ -27,6 +27,7 @@ using sones.GraphDB.Extensions;
 using sones.Library.Commons.Security;
 using sones.Library.Commons.Transaction;
 using sones.GraphDB.Expression.Tree.Literals;
+using sones.Library.UserdefinedDataType;
 
 namespace sones.GraphDB.Expression.QueryPlan
 {
@@ -72,7 +73,14 @@ namespace sones.GraphDB.Expression.QueryPlan
                 
                 if (result != null)
                 {
-                    if (_constant.Value.CompareTo(result) == 0)
+                    if (result.GetType().IsSubclassOf(typeof(AUserdefinedDataType)))
+                    {
+                        if (_constant.Value.CompareTo(((AUserdefinedDataType)result).Value) == 0)
+                        {
+                            yield return aVertex;
+                        }
+                    }
+                    else if (_constant.Value.CompareTo(result) == 0)
                     {
                         yield return aVertex;
                     }

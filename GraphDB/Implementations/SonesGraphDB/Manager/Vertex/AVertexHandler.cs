@@ -36,6 +36,7 @@ using sones.GraphDB.Request.Insert;
 using sones.GraphDB.TypeManagement.Base;
 using sones.GraphDB.Manager.QueryPlan;
 using sones.Library.LanguageExtensions;
+using sones.Library.UserdefinedDataType;
 
 namespace sones.GraphDB.Manager.Vertex
 {
@@ -219,7 +220,21 @@ namespace sones.GraphDB.Manager.Vertex
                                 propDef.Multiplicity == PropertyMultiplicity.Set)
                                 converted = unknownProp.Value.ConvertToIComparableList(propDef.BaseType);
                             else
-                                converted = unknownProp.Value.ConvertToIComparable(propDef.BaseType);
+                            {
+                                if (propDef.BaseType.IsSubclassOf(typeof(AUserdefinedDataType)))
+                                {
+                                     var userdefType = (AUserdefinedDataType)Activator.CreateInstance(propDef.BaseType, new object[] {unknownProp.Value.ConvertToIComparable(typeof(String)) as String});
+
+                                     if (userdefType != null)
+                                     {
+                                         converted = userdefType;
+                                     }
+                                }
+                                else
+                                {
+                                    converted = unknownProp.Value.ConvertToIComparable(propDef.BaseType);
+                                }
+                            }
 
                             myPropertyProvider.AddStructuredProperty(unknownProp.Key, converted);
                         }
@@ -288,7 +303,7 @@ namespace sones.GraphDB.Manager.Vertex
                                                 IPropertyDefinition propertyDef)
         {
             //Assign safty should be suffice.
-            if (!propertyDef.BaseType.IsAssignableFrom(myValue.GetType()))
+            if (!propertyDef.BaseType.IsAssignableFrom(myValue.GetType()) && !propertyDef.BaseType.IsSubclassOf(typeof(AUserdefinedDataType)))
                 throw new PropertyHasWrongTypeException(myVertexTypeName,
                                                         propertyDef.Name,
                                                         propertyDef.BaseType.Name,

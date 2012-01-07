@@ -156,6 +156,10 @@
       <Project>{1F652BC0-ECEE-409B-8EFB-51276C41EAD1}</Project>
       <Name>PluginManager %28Library\Internal\PluginManager%29</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Plugins\GraphDB\UserdefinedDataTypes\IPAddress\IPAddress.csproj">
+      <Project>{95DEDD27-7019-4900-9168-8CE27C80D846}</Project>
+      <Name>IPAddress</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Plugins\GraphDS\DrainPipeLog\IDrainPipe\IDrainPipe.csproj">
       <Project>{F51DA5BD-5808-409E-A907-4EF93B2C5E71}</Project>
       <Name>IDrainPipe</Name>
@@ -186,7 +190,7 @@
     </ProjectReference>
     <ProjectReference Include="..\..\Plugins\GraphDS\Services\Implementations\RemoteAPIService\RemoteAPIService.csproj">
       <Project>{5A7B5A5F-289A-4109-AD1E-52C62F28DA51}</Project>
-      <Name>RemoteAPIService</Name>
+      <Name>RemoteAPIService %28Plugins\GraphDS\Services\Implementations\RemoteAPIService\RemoteAPIService%29</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Plugins\GraphDS\Services\Implementations\RESTService\RESTService.csproj">
       <Project>{9542AA45-4A4F-4364-BDD8-1446261F0963}</Project>

@@ -223,7 +223,7 @@ namespace sones.sonesGraphDBStarter
 
 			#region pre-configure REST Service
 			Dictionary<string, object> RestParameter = new Dictionary<string, object>();
-			RestParameter.Add("IPAddress", IPAddress.Any);
+			RestParameter.Add("IPAddress", System.Net.IPAddress.Any);
 			RestParameter.Add("Port", Properties.Settings.Default.ListeningPort);
 			RestParameter.Add("Username", Properties.Settings.Default.Username);
 			RestParameter.Add("Password", Properties.Settings.Default.Password);
@@ -233,7 +233,7 @@ namespace sones.sonesGraphDBStarter
 			#region Remote API Service
 
 			Dictionary<string, object> RemoteAPIParameter = new Dictionary<string, object>();
-			RemoteAPIParameter.Add("IPAddress", IPAddress.Any);
+			RemoteAPIParameter.Add("IPAddress", System.Net.IPAddress.Any);
 			RemoteAPIParameter.Add("Port", (ushort)9970);
 			//RemoteAPIParameter.Add("IsSecure", true);
 
