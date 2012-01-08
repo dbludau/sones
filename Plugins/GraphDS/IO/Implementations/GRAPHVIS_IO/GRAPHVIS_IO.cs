@@ -30,6 +30,7 @@ using sones.Library.VersionedPluginManager;
 using System.Xml;
 using System.Reflection;
 using System.Text;
+using sones.Library.UserdefinedDataType;
 
 namespace sones.Plugins.GraphDS.IO
 {
@@ -294,7 +295,14 @@ namespace sones.Plugins.GraphDS.IO
                         {
                             if (!Nodes.Exists((s) => (s == property.Item2.ToString())))
                             {
-                                Nodes.Add(property.Item2.ToString());
+                                if (property.Item2.GetType().IsSubclassOf(typeof(AUserdefinedDataType)))
+                                {
+                                    Nodes.Add(((AUserdefinedDataType)property.Item2).Value);
+                                }
+                                else
+                                {
+                                    Nodes.Add(property.Item2.ToString());
+                                }
                             }
                         }
                     }
