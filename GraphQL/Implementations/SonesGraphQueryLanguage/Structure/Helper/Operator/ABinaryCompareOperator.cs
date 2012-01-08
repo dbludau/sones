@@ -40,6 +40,8 @@ using sones.Library.PropertyHyperGraph;
 using sones.GraphDB.Expression;
 using sones.GraphDB.ErrorHandling;
 using sones.Library.Commons.VertexStore.Definitions;
+using sones.Library.UserdefinedDataType;
+using sones.Library.ErrorHandling;
 
 namespace sones.GraphQL.GQL.Structure.Helper.Operator
 {
@@ -573,8 +575,23 @@ namespace sones.GraphQL.GQL.Structure.Helper.Operator
         {
             if (aExpressionDefinition is ValueDefinition)
             {
-                return new SingleLiteralExpression( ((ValueDefinition)aExpressionDefinition).Value.ConvertToIComparable(myTypeOfLiteral));
+                if (myTypeOfLiteral.IsSubclassOf(typeof(AUserdefinedDataType)))
+                {
+                    try
+                    {
+                        var userdefInstance = (AUserdefinedDataType)Activator.CreateInstance(myTypeOfLiteral, new object[] { (((ValueDefinition)aExpressionDefinition).Value.ConvertToIComparable(typeof(String))) });
 
+                        return new SingleLiteralExpression((IComparable)userdefInstance.Value);
+                    }
+                    catch(Exception e)
+                    {
+                        throw new UnknownException(e);
+                    }
+                }
+                else
+                {
+                    return new SingleLiteralExpression(((ValueDefinition)aExpressionDefinition).Value.ConvertToIComparable(myTypeOfLiteral));
+                }
             }
             else
             {

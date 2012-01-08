@@ -33,13 +33,42 @@ namespace sones.Library.UserdefinedDataType
     /// </summary>
     public abstract class AUserdefinedDataType : IFastSerialize, IComparable, IPluginable
     {
-        #region property
+        #region Constructor
+
+        /// <summary>
+        /// The default constructor.
+        /// </summary>
+        public AUserdefinedDataType()
+        { }
+
+        /// <summary>
+        /// The constructor to set a value for the userdefined data type.
+        /// </summary>
+        /// <param name="value"></param>
+        public AUserdefinedDataType(IComparable value)
+        {
+            Value = value.ToString();
+        }
+
+        #endregion
+
+
+        #region Properties
 
         /// <summary>
         /// The full qualified class name of the user defined type.
         /// </summary>
         public abstract String TypeName { get; }
-   
+
+        /// <summary>
+        /// Set and get a value for the user defined data type.
+        /// </summary>
+        public abstract String Value
+        {
+            get;
+            set;
+        }
+
         #endregion
 
         #region IFastSerialize Members

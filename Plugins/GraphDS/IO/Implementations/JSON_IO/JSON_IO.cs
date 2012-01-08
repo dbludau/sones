@@ -27,6 +27,7 @@ using sones.Library.VersionedPluginManager;
 using Newtonsoft.Json.Linq;
 using System.Text;
 using sones.Library.CollectionWrapper;
+using sones.Library.UserdefinedDataType;
 
 namespace sones.Plugins.GraphDS.IO.JSON_IO
 {    
@@ -196,7 +197,14 @@ namespace sones.Plugins.GraphDS.IO.JSON_IO
                             }
                             else
                             {
-                                _properties.Add(new JProperty(_property.Item1, _property.Item2.ToString()));
+                                if (_property.Item2.GetType().IsSubclassOf(typeof(AUserdefinedDataType)))
+                                {
+                                    _properties.Add(new JProperty(_property.Item1, ((AUserdefinedDataType)_property.Item2).Value));
+                                }
+                                else
+                                {
+                                    _properties.Add(new JProperty(_property.Item1, _property.Item2.ToString()));
+                                }
                             }
                         }
                 }

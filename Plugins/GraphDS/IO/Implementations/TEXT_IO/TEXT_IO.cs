@@ -28,6 +28,7 @@ using sones.Library.Settings;
 using sones.GraphQL.Result;
 using System.IO;
 using sones.Library.CollectionWrapper;
+using sones.Library.UserdefinedDataType;
 
 namespace sones.Plugins.GraphDS.IO
 {
@@ -182,7 +183,14 @@ namespace sones.Plugins.GraphDS.IO
                             }
                             else
                             {
-                                Output.AppendLine(Header + _property.Item1 + "\t " + _property.Item2.ToString());
+                                if (_property.Item2.GetType().IsSubclassOf(typeof(AUserdefinedDataType)))
+                                {
+                                    Output.AppendLine(Header + _property.Item1 + "\t " + ((AUserdefinedDataType)_property.Item2).Value);
+                                }
+                                else
+                                {
+                                    Output.AppendLine(Header + _property.Item1 + "\t " + _property.Item2.ToString());
+                                }
                             }
                         }
                     }
@@ -268,7 +276,14 @@ namespace sones.Plugins.GraphDS.IO
                             }
                             else
                             {
-                                Output.AppendLine(Header + "\t\t" + _property.Item1 + "\t " + _property.Item2.ToString());
+                                if (_property.Item2.GetType().IsSubclassOf(typeof(AUserdefinedDataType)))
+                                {
+                                    Output.AppendLine(Header + "\t\t" + _property.Item1 + "\t " + ((AUserdefinedDataType)_property.Item2).Value);
+                                }
+                                else
+                                {
+                                    Output.AppendLine(Header + "\t\t" + _property.Item1 + "\t " + _property.Item2.ToString());
+                                }
                             }
                         }
                     }
@@ -307,7 +322,14 @@ namespace sones.Plugins.GraphDS.IO
                                 }
                                 else
                                 {
-                                    Output.AppendLine(Header + "\t\t\t\t " + _property.Item1 + "\t\t " + _property.Item2.ToString());
+                                    if (_property.Item2.GetType().IsSubclassOf(typeof(AUserdefinedDataType)))
+                                    {
+                                        Output.AppendLine(Header + "\t\t\t\t " + _property.Item1 + "\t\t " + ((AUserdefinedDataType)_property.Item2).Value);
+                                    }
+                                    else
+                                    {
+                                        Output.AppendLine(Header + "\t\t\t\t " + _property.Item1 + "\t\t " + _property.Item2.ToString());
+                                    }
                                 }
                             }
                         }
